@@ -557,7 +557,7 @@
   }
 
   /* ---------------- Exhibit 1: adoption staircase ---------------- */
-  (function () {
+  const drawAdoption = function () {
     const W = 812, H = 300, L = 46, R = 8, T = 26, B = 44;
     const y = yScale(H - B, T);
     const n = ADOPTION.length, gap = 26;
@@ -576,7 +576,7 @@
     s += `<text class="ax" x="${L}" y="${H - 6}">FP&amp;A organization size (FTE) →</text>`;
     document.getElementById("ch-adoption").innerHTML =
       `<svg viewBox="0 0 ${W} ${H}" style="min-width:560px" role="img" aria-label="Bar chart: GBS adoption for FP&A rises from 33% below 100 FTE to 100% above 2,000 FTE">${s}</svg>`;
-  })();
+  };
 
   /* ---------------- Exhibit 2: scope by maturity, grouped ---------------- */
   const drawScope = function () {
@@ -606,7 +606,6 @@
     document.getElementById("ch-scope").innerHTML =
       `<svg viewBox="0 0 ${W} ${H}" style="min-width:680px" role="img" aria-label="Grouped bar chart: share of companies whose GBS supports each FP&A process, split by maturity level">${s}</svg>`;
   };
-  drawScope();
 
   const INSIGHTS = {
     def: "Strategic Planning is the sharpest cut: 0% of basic companies hand it to GBS, 17% of developing ones — and 75% of mature ones.",
@@ -627,7 +626,7 @@
   });
 
   /* ---------------- Exhibit 3: current + planned, horizontal stacked ---------------- */
-  (function () {
+  const drawPlan = function () {
     const W = 812, rowH = 40, T = 30, B = 26, L = 218, R = 52;
     const H = T + PLAN.length * rowH + B;
     const xw = v => (v / 100) * (W - L - R);
@@ -656,10 +655,10 @@
          <span class="lg"><span class="sw" style="background:${S().s3}"></span>Currently supported</span>
          <span class="lg"><span class="sw" style="background:repeating-linear-gradient(45deg,${S().s2},${S().s2} 2px,transparent 2px,transparent 5px);border:1px solid ${S().s2}"></span>Planned to include (1–3 yrs)</span>
        </div>`;
-  })();
+  };
 
   /* ---------------- Exhibit 4: challenges dot plot ---------------- */
-  (function () {
+  const drawChal = function () {
     const W = 812, rowH = 44, T = 30, B = 26, L = 218, R = 30;
     const H = T + CHAL.length * rowH + B;
     const xw = v => L + (v / 100) * (W - L - R);
@@ -689,10 +688,10 @@
          <span class="lg"><span class="sw" style="background:${S().s2};border-radius:50%"></span>Developing</span>
          <span class="lg"><span class="sw" style="background:${S().s3};border-radius:50%"></span>Mature</span>
        </div>`;
-  })();
+  };
 
   /* ---------------- Exhibit 5: automation & AI, two stacked panels ---------------- */
-  (function () {
+  const drawAI = function () {
     const W = 812, H = 330, T = 26, B = 66, mid = 60;
     const pw = (W - mid) / 2;
     const y = yScale(H - B, T);
@@ -737,10 +736,10 @@
          <span class="lg"><span class="sw" style="background:${S().s2}"></span>Partial / evaluating</span>
          <span class="lg"><span class="sw" style="background:${S().s3}"></span>Most automated / embedded</span>
        </div>`;
-  })();
+  };
 
   /* ---------------- Exhibit 6: hiring-market corroboration ---------------- */
-  (function () {
+  const drawHiring = function () {
     /* From github.com/morichtereur/fpa-gbs-hiring-monitor, snapshot 2026-09-04 */
     const LENSES = [
       ["GBS phrase signal", 59.0, 41.0, 0.0, 61],
@@ -781,7 +780,22 @@
          <span class="lg"><span class="sw" style="background:${S().s2}"></span>Planning (budget · forecast · capex)</span>
          <span class="lg"><span class="sw" style="background:${S().s3}"></span>Strategic (strategy · M&amp;A)</span>
        </div>`;
-  })();
+  };
+
+  /* Charts bake resolved colors into their SVGs, so a theme change after
+     load must redraw them. The scope isolation resets with the redraw. */
+  const renderAll = function () {
+    drawAdoption(); drawScope(); drawPlan(); drawChal(); drawAI(); drawHiring();
+    document.querySelectorAll("#lg-scope .btn").forEach(b => b.setAttribute("aria-pressed", "false"));
+    const si = document.getElementById("scope-insight");
+    if (si) si.textContent = INSIGHTS.def;
+  };
+  renderAll();
+  const mq = matchMedia("(prefers-color-scheme: dark)");
+  if (mq.addEventListener) mq.addEventListener("change", renderAll);
+  else if (mq.addListener) mq.addListener(renderAll);
+  new MutationObserver(renderAll).observe(document.documentElement,
+    { attributes: true, attributeFilter: ["data-theme"] });
 
   /* ---------------- Positioning tool ---------------- */
   (function () {
