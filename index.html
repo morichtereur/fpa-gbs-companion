@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="An independent interactive reading of EY's 2026 survey of FP&A in Global Business Services — five exhibits and a positioning tool, every figure redrawn from the published study.">
+<title>Scale Wins, Fragmentation Loses</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --paper: #F7F9F8;
+    --ink: #1A2226;
+    --muted: #5B6B70;
+    --faint: #8C9BA0;
+    --rule: #DDE4E3;
+    --rule-soft: #E8EEED;
+    --card: #FFFFFF;
+    --s1: #57B4CC;  /* ordinal light step  */
+    --s2: #2B8CA8;  /* ordinal mid step    */
+    --s3: #0D5A73;  /* ordinal dark step   */
+    --none: #C4CFD1; /* "not at all" — absence, neutral */
+    --accent-ink: #0D5A73;
+    --tip-bg: #1A2226;
+    --tip-ink: #F7F9F8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #131B1E;
+      --ink: #E8EEEF;
+      --muted: #96A8AD;
+      --faint: #6E8085;
+      --rule: #28363B;
+      --rule-soft: #1D2A2E;
+      --card: #182226;
+      --s1: #BFE4EE;
+      --s2: #62B4CA;
+      --s3: #2B8CA8;
+      --none: #3C4B50;
+      --accent-ink: #8FCBDD;
+      --tip-bg: #E8EEEF;
+      --tip-ink: #131B1E;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #131B1E;
+    --ink: #E8EEEF;
+    --muted: #96A8AD;
+    --faint: #6E8085;
+    --rule: #28363B;
+    --rule-soft: #1D2A2E;
+    --card: #182226;
+    --s1: #BFE4EE;
+    --s2: #62B4CA;
+    --s3: #2B8CA8;
+    --none: #3C4B50;
+    --accent-ink: #8FCBDD;
+    --tip-bg: #E8EEEF;
+    --tip-ink: #131B1E;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    line-height: 1.65;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 24px 96px; }
+  .prose { max-width: 660px; }
+
+  .mono {
+    font-family: "IBM Plex Mono", "SF Mono", Menlo, monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- masthead ---------- */
+  header { padding: 56px 0 0; }
+  .eyebrow { font-size: 11px; color: var(--muted); font-weight: 500; }
+  .eyebrow b { color: var(--accent-ink); font-weight: 600; }
+  h1 {
+    font-family: "Newsreader", Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(34px, 6vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    margin: 18px 0 0;
+    text-wrap: balance;
+    max-width: 760px;
+  }
+  h1 em { font-style: italic; font-weight: 400; color: var(--accent-ink); }
+  .dek {
+    font-size: 19px;
+    color: var(--muted);
+    margin: 22px 0 0;
+    max-width: 620px;
+    text-wrap: pretty;
+  }
+  .dek a { color: var(--accent-ink); }
+
+  .statrow {
+    display: flex; flex-wrap: wrap; gap: 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+    margin: 44px 0 0;
+  }
+  .stat {
+    flex: 1 1 150px;
+    padding: 18px 20px 20px 0;
+  }
+  .stat + .stat { border-left: 1px solid var(--rule); padding-left: 20px; }
+  .stat .n {
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 34px; font-weight: 500; line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat .l { font-size: 12.5px; color: var(--muted); margin-top: 8px; line-height: 1.45; font-family: "Source Serif 4", Georgia, serif; }
+
+  /* ---------- sections & exhibits ---------- */
+  section { margin-top: 72px; }
+  .exh-head { display: flex; align-items: baseline; gap: 14px; border-top: 1px solid var(--ink); padding-top: 14px; }
+  .exh-no { font-size: 11px; color: var(--accent-ink); font-weight: 600; white-space: nowrap; }
+  h2 {
+    font-family: "Newsreader", Georgia, serif;
+    font-weight: 500;
+    font-size: 27px;
+    line-height: 1.2;
+    margin: 0;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .lede { color: var(--muted); font-size: 16px; margin: 14px 0 0; max-width: 640px; }
+  .lede b, .prose b { font-weight: 600; color: var(--ink); }
+
+  figure { margin: 30px 0 0; }
+  .chartbox { overflow-x: auto; }
+  .chartbox svg { display: block; }
+  figcaption {
+    font-size: 13.5px; color: var(--muted); line-height: 1.55;
+    max-width: 640px; margin-top: 14px;
+    padding-top: 10px; border-top: 1px solid var(--rule-soft);
+  }
+  .src { font-family: "IBM Plex Mono", Menlo, monospace; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); display: block; margin-top: 6px; }
+
+  /* chart text */
+  .ax { font-family: "IBM Plex Mono", Menlo, monospace; font-size: 10.5px; fill: var(--muted); }
+  .axf { font-family: "IBM Plex Mono", Menlo, monospace; font-size: 10.5px; fill: var(--faint); }
+  .val { font-family: "IBM Plex Mono", Menlo, monospace; font-size: 11px; font-weight: 500; fill: var(--ink); }
+  .valw { font-family: "IBM Plex Mono", Menlo, monospace; font-size: 10.5px; font-weight: 500; }
+  .grid { stroke: var(--rule-soft); stroke-width: 1; }
+  .base { stroke: var(--muted); stroke-width: 1; }
+
+  /* legend + toggles */
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 22px 0 0; align-items: center; }
+  .lg { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); font-family: "Source Serif 4", Georgia, serif; }
+  .sw { width: 13px; height: 13px; border-radius: 3px; flex: 0 0 auto; }
+  .lg.btn { cursor: pointer; border: 1px solid var(--rule); border-radius: 999px; padding: 4px 12px 4px 8px; background: none; transition: border-color .15s, opacity .15s; }
+  .lg.btn[aria-pressed="true"] { border-color: var(--accent-ink); color: var(--ink); }
+  .lg.btn:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+  .hint { font-size: 11px; color: var(--faint); font-family: "IBM Plex Mono", Menlo, monospace; letter-spacing: .04em; }
+
+  .insight {
+    font-family: "Newsreader", Georgia, serif; font-size: 18px; font-style: italic;
+    color: var(--ink); margin: 18px 0 0; max-width: 620px; min-height: 3em; line-height: 1.45;
+  }
+
+  /* executive summary — pyramid principle */
+  .argument { margin-top: 46px; border: 1px solid var(--rule); border-radius: 6px; background: var(--card); padding: 26px 30px 28px; }
+  .argument .k { font-size: 10px; color: var(--accent-ink); font-weight: 600; }
+  .argument .gov {
+    font-family: "Newsreader", Georgia, serif; font-size: 22px; line-height: 1.35;
+    margin: 10px 0 0; text-wrap: balance; font-weight: 500;
+  }
+  .arg-items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--rule-soft); }
+  .arg-item .n { font-family: "IBM Plex Mono", Menlo, monospace; font-size: 12px; color: var(--accent-ink); font-weight: 600; }
+  .arg-item p { margin: 6px 0 0; font-size: 14px; color: var(--muted); line-height: 1.55; text-wrap: pretty; }
+  .arg-item p b { color: var(--ink); font-weight: 600; }
+  .xref { font-size: 9.5px; color: var(--accent-ink); font-weight: 500; display: inline-block; margin-top: 8px; }
+  @media (max-width: 620px) { .arg-items { grid-template-columns: 1fr; } }
+
+  /* measure line under exhibit head */
+  .measure { font-size: 10px; color: var(--faint); font-weight: 500; margin: 10px 0 0; }
+
+  /* so-what bar */
+  .sowhat {
+    display: flex; gap: 16px; align-items: baseline;
+    margin-top: 20px; max-width: 660px; padding: 14px 20px 15px 18px;
+    background: var(--card); border-left: 3px solid var(--accent-ink);
+    border-radius: 0 6px 6px 0;
+  }
+  .sowhat .k { font-size: 10px; color: var(--accent-ink); font-weight: 600; white-space: nowrap; }
+  .sowhat p { margin: 0; font-size: 15px; line-height: 1.55; text-wrap: pretty; }
+
+  /* pull row 80-60-20 */
+  .pullrow { display: flex; gap: 0; margin: 34px 0 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); flex-wrap: wrap; }
+  .pull { flex: 1 1 180px; padding: 20px 22px 22px 0; }
+  .pull + .pull { border-left: 1px solid var(--rule); padding-left: 22px; }
+  .pull .n { font-family: "Newsreader", Georgia, serif; font-size: 44px; font-weight: 500; line-height: 1; color: var(--accent-ink); }
+  .pull .l { font-size: 13.5px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+
+  /* decisions */
+  .decisions { margin: 30px 0 0; padding: 0; list-style: none; counter-reset: dec; max-width: 680px; }
+  .decisions li { counter-increment: dec; display: grid; grid-template-columns: 52px 1fr; gap: 0 18px; padding: 20px 0; border-top: 1px solid var(--rule); }
+  .decisions li:last-child { border-bottom: 1px solid var(--rule); }
+  .decisions li::before {
+    content: "0" counter(dec);
+    font-family: "IBM Plex Mono", Menlo, monospace; font-size: 22px; color: var(--accent-ink);
+    line-height: 1.3;
+  }
+  .decisions h3 { font-family: "Newsreader", Georgia, serif; font-size: 19px; font-weight: 600; margin: 0 0 4px; }
+  .decisions p { margin: 0; font-size: 15px; color: var(--muted); }
+
+  /* positioning tool */
+  .tool { border: 1px solid var(--rule); border-radius: 6px; background: var(--card); padding: 26px 28px 28px; margin-top: 30px; }
+  .tool-q { font-size: 11px; color: var(--muted); font-weight: 500; margin: 22px 0 10px; }
+  .tool-q:first-of-type { margin-top: 4px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: "Source Serif 4", Georgia, serif; font-size: 14px; color: var(--muted);
+    border: 1px solid var(--rule); border-radius: 999px; padding: 5px 14px;
+    background: none; cursor: pointer; transition: border-color .15s, color .15s, background .15s;
+  }
+  .chip[aria-pressed="true"] { border-color: var(--accent-ink); color: var(--paper); background: var(--accent-ink); }
+  .chip:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+  .chip:disabled { opacity: .35; cursor: default; }
+  .exnote { font-size: 12px; color: var(--faint); font-style: italic; margin: 10px 0 0; }
+  .result { border-top: 1px solid var(--rule); margin-top: 24px; padding-top: 20px; }
+  .result .rh {
+    font-family: "Newsreader", Georgia, serif; font-size: 21px; font-style: italic;
+    line-height: 1.4; margin: 0 0 14px; text-wrap: pretty;
+  }
+  .result .row { display: grid; grid-template-columns: 118px 1fr; gap: 0 18px; padding: 10px 0; border-top: 1px solid var(--rule-soft); }
+  .result .rk { font-size: 10px; color: var(--accent-ink); font-weight: 600; padding-top: 3px; }
+  .result .rv { font-size: 14.5px; color: var(--muted); line-height: 1.55; }
+  .result .rv b { color: var(--ink); font-weight: 600; }
+  .result .caveat { font-size: 12px; color: var(--faint); margin: 14px 0 0; font-style: italic; }
+  @media (max-width: 620px) { .result .row { grid-template-columns: 1fr; gap: 2px; } }
+
+  /* method note */
+  .method { border: 1px solid var(--rule); border-radius: 6px; padding: 26px 28px; margin-top: 30px; max-width: 680px; background: var(--card); }
+  .method h3 { font-family: "Newsreader", Georgia, serif; font-size: 20px; margin: 0 0 12px; font-weight: 600; }
+  .method ul { margin: 0; padding-left: 18px; }
+  .method li { font-size: 14.5px; color: var(--muted); margin-top: 8px; text-wrap: pretty; }
+  .method li b { color: var(--ink); font-weight: 600; }
+
+  footer { margin-top: 84px; border-top: 1px solid var(--ink); padding-top: 20px; font-size: 13.5px; color: var(--muted); max-width: 680px; }
+  footer p { margin: 0 0 10px; }
+  footer a { color: var(--accent-ink); }
+
+  /* tooltip */
+  #tip {
+    position: fixed; pointer-events: none; z-index: 10;
+    background: var(--tip-bg); color: var(--tip-ink);
+    font-family: "IBM Plex Mono", Menlo, monospace; font-size: 11.5px; line-height: 1.5;
+    padding: 7px 10px; border-radius: 4px; max-width: 260px;
+    opacity: 0; transition: opacity .1s;
+    white-space: pre-line;
+  }
+  [data-tip] { cursor: default; }
+
+  .fnote { font-size: 12.5px; color: var(--faint); margin-top: 10px; max-width: 640px; }
+  .fnote sup { color: var(--accent-ink); }
+
+  g.series { transition: opacity .25s; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media (max-width: 620px) {
+    body { font-size: 16px; }
+    .stat, .pull { flex-basis: 100%; border-left: none !important; padding-left: 0 !important; }
+    .stat + .stat, .pull + .pull { border-top: 1px solid var(--rule); }
+    .decisions li { grid-template-columns: 40px 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow mono">An independent companion · <b>not an EY publication</b> · figures redrawn from the published study</p>
+  <h1>Scale decides adoption.<br><em>Maturity decides scope.</em></h1>
+  <p class="dek">A close, interactive reading of <a href="https://www.ey.com/content/dam/ey-unified-site/ey-com/en-gl/services/consulting/documents/ey-gl-the-state-of-financial-planning-in-global-business-services-in-2026-and-beyond-07-2026.pdf">“The state of Financial Planning and Analysis in Global Business Services in 2026 and beyond”</a> — EY’s May&nbsp;2026 survey by Christian Willenbruch, Maria Saggese and Alexandre Magnou. Every number below is theirs; the reading is mine.</p>
+
+  <div class="statrow">
+    <div class="stat"><div class="n">~50</div><div class="l">global companies surveyed — GBS and FP&amp;A leaders, fieldwork in H2&nbsp;2025</div></div>
+    <div class="stat"><div class="n">&gt;50%</div><div class="l">already run FP&amp;A activities inside their GBS organization</div></div>
+    <div class="stat"><div class="n">85%</div><div class="l">of the rest plan to add FP&amp;A services to GBS within 1–3 years</div></div>
+  </div>
+
+  <div class="argument">
+    <span class="k mono">The argument in one pass</span>
+    <p class="gov">FP&amp;A is moving into GBS along a predictable path: scale opens the door, maturity widens the mandate, and data readiness decides who converts automation into intelligence.</p>
+    <div class="arg-items">
+      <div class="arg-item"><span class="n">1</span>
+        <p><b>Adoption is a function of scale, and the direction is settled.</b> GBS delivery rises step for step with FP&amp;A size to 100% above 2,000 FTE — and 85% of today’s non-adopters plan to follow within 1–3 years.</p>
+        <span class="xref mono">Exhibit 1</span></div>
+      <div class="arg-item"><span class="n">2</span>
+        <p><b>Scope follows maturity, not ambition.</b> The transactional core is broadly shared; the strategic tier opens only for mature functions — and the planned expansion concentrates on planning and forecasting.</p>
+        <span class="xref mono">Exhibits 2–3</span></div>
+      <div class="arg-item"><span class="n">3</span>
+        <p><b>The binding constraint rotates as functions mature</b> — from scope and silos, to stakeholder trust, to data — and AI separates the field where automation alone no longer does.</p>
+        <span class="xref mono">Exhibits 4–5</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════ Exhibit 1 ═══════════ -->
+<section>
+  <div class="exh-head"><span class="exh-no mono">Exhibit 1</span>
+    <h2>Adoption rises step for step with scale — above 2,000 FP&amp;A FTE it is universal</h2></div>
+  <p class="measure mono">Share of companies delivering FP&amp;A through GBS, % · by FP&amp;A organization size</p>
+  <p class="lede">Adoption is not a preference curve — it is a staircase that rises with every size band and ends at 100%. The open question the survey leaves is not <b>whether</b> FP&amp;A moves into GBS, but how far down the size distribution the staircase keeps descending.</p>
+  <figure>
+    <div class="chartbox" id="ch-adoption"></div>
+    <figcaption>Share of companies delivering FP&amp;A activities through GBS, by size of the FP&amp;A organization. The 85% of non-adopters planning to add FP&amp;A within 1–3 years suggests the lower steps are a timing gap, not a verdict.
+    <span class="src">Source: EY survey, p. 4 — “Adoption of FP&amp;A activities in GBS per company size (# of FP&amp;A FTE)”</span></figcaption>
+  </figure>
+  <div class="sowhat"><span class="k mono">So what</span>
+    <p>For a sub-scale FP&amp;A function the live question is sequencing, not direction: with 85% of non-adopters already planning the move, waiting is a choice about <em>when</em> to standardize — and the study notes most are deliberately sequencing centralization with automation rather than doubting the value.</p></div>
+</section>
+
+<!-- ═══════════ Exhibit 2 ═══════════ -->
+<section>
+  <div class="exh-head"><span class="exh-no mono">Exhibit 2</span>
+    <h2>GBS runs the transactional core almost everywhere — the strategic tier opens only with maturity</h2></div>
+  <p class="measure mono">Share of companies whose GBS supports each process, % · by self-assessed maturity</p>
+  <p class="lede">The study clusters the delivered scope into three plateaus — and the gradient is the finding: what companies hand to GBS first is the repetitive core, while planning arrives second and the strategic tier arrives only with maturity.</p>
+
+  <div class="pullrow">
+    <div class="pull"><div class="n">≈80%</div><div class="l">run <b>Cost Accounting, Financial Analysis &amp; Performance Reporting</b> in GBS — the transactional core</div></div>
+    <div class="pull"><div class="n">≈60%</div><div class="l">already perform <b>Annual Planning and Forecasting</b> there</div></div>
+    <div class="pull"><div class="n">≈20%</div><div class="l">support <b>Strategic Planning and M&amp;A</b> through GBS teams</div></div>
+  </div>
+
+  <div class="legend" id="lg-scope">
+    <button class="lg btn" data-series="0" aria-pressed="false"><span class="sw" style="background:var(--s1)"></span>Basic</button>
+    <button class="lg btn" data-series="1" aria-pressed="false"><span class="sw" style="background:var(--s2)"></span>Developing</button>
+    <button class="lg btn" data-series="2" aria-pressed="false"><span class="sw" style="background:var(--s3)"></span>Mature</button>
+    <span class="hint">click a maturity level to isolate it</span>
+  </div>
+  <p class="insight" id="scope-insight">Strategic Planning is the sharpest cut: 0% of basic companies hand it to GBS, 17% of developing ones — and 75% of mature ones.</p>
+
+  <figure>
+    <div class="chartbox" id="ch-scope"></div>
+    <figcaption>FP&amp;A processes supported by GBS, by self-assessed maturity. The study’s own clarification applies throughout: 100% means the process is <em>generally supported</em> by GBS — it does not say to what extent.
+    <span class="src">Source: EY survey, p. 5 — “FP&amp;A processes supported by GBS (per maturity level)”</span></figcaption>
+  </figure>
+  <div class="sowhat"><span class="k mono">So what</span>
+    <p>A GBS mandate is earned in tiers: delivering the transactional core credibly is the entry ticket to planning work, and planning is the proving ground for the strategic tier. The exhibit reads left to right as the function’s career path — skipping a tier is what the trust data in Exhibit 4 punishes.</p></div>
+</section>
+
+<!-- ═══════════ Exhibit 3 ═══════════ -->
+<section>
+  <div class="exh-head"><span class="exh-no mono">Exhibit 3</span>
+    <h2>The planned expansion concentrates on planning and forecasting — the strategic tier stays retained</h2></div>
+  <p class="measure mono">Share of companies, % · current delivery plus planned addition within 1–3 years</p>
+  <p class="lede">Stack what is delivered today against what companies plan to add, and the next one to three years concentrate on exactly the processes the study calls the way out of the “extended workbench”: <b>Budgeting +24pt and Forecasting +24pt</b> — each planned to nearly double — alongside Performance Reporting’s +35pt. The strategic tier, by contrast, is barely on the roadmap.</p>
+  <figure>
+    <div class="chartbox" id="ch-plan"></div>
+    <figcaption>Current and planned FP&amp;A process penetration in GBS, across all surveyed companies, sorted by combined level. Solid = currently supported; hatched = planned to include. Strategic Projects / M&amp;A gains only +3pt — trust, not capability, is the study’s explanation for why the top of the pyramid moves last.
+    <span class="src">Source: EY survey, p. 6 — “Current and planned FP&amp;A GBS process penetration”</span></figcaption>
+  </figure>
+  <div class="sowhat"><span class="k mono">So what</span>
+    <p>The next one to three years decide whether planning becomes a GBS process or stays a local craft. The +3pt on M&amp;A support says the barrier at the top is not capability but ownership — which is why the study treats stakeholder trust as a managed workstream, not a communications afterthought.</p></div>
+</section>
+
+<!-- ═══════════ Exhibit 4 ═══════════ -->
+<section>
+  <div class="exh-head"><span class="exh-no mono">Exhibit 4</span>
+    <h2>The binding constraint rotates with maturity: first scope, then trust, then data</h2></div>
+  <p class="measure mono">Share of companies naming each challenge, % · by self-assessed maturity</p>
+  <p class="lede">Read the challenge chart by maturity level and the barriers change identity as a function matures. Basic setups are stopped by <b>scope and silos</b> (both 100%). Developing ones hit <b>stakeholder buy-in</b> (62%) — the trust problem that appears precisely when GBS reaches for judgment work. For mature organizations no single blocker dominates: silos, buy-in, tools and <b>data quality</b> all settle at 50%, which is what remains when structure is solved.</p>
+  <figure>
+    <div class="chartbox" id="ch-chal"></div>
+    <figcaption>Share of companies naming each challenge, by maturity level. A dot at 0% is a named category no company in that cohort selected. The three cohorts are small — read positions, not decimal points.
+    <span class="src">Source: EY survey, pp. 7 &amp; 10 — “Challenges faced by GBS FP&amp;A organization (per maturity level)”</span></figcaption>
+  </figure>
+  <div class="sowhat"><span class="k mono">So what</span>
+    <p>A transformation plan should target the blocker of the maturity level it is at, not a generic list: secure the mandate first, win the stakeholders second, fix the data third. Spending on the wrong tier’s blocker — data platforms for a basic setup, change communications for a mature one — buys the least movement.</p></div>
+</section>
+
+<!-- ═══════════ Exhibit 5 ═══════════ -->
+<section>
+  <div class="exh-head"><span class="exh-no mono">Exhibit 5</span>
+    <h2>Automation is table stakes at every size — embedded AI is where the field separates</h2></div>
+  <p class="measure mono">Share of companies per size cohort, % · columns sum to 100 · by global FTE</p>
+  <p class="lede">The study’s sharpest sentence — <b>“efficiency is foundational, intelligence is the differentiator”</b> — is visible in the pairing below. Partial automation is the norm in every size cohort. AI is where the cohorts separate: 40% of the smallest companies report no AI or ML use in FP&amp;A at all, against 9% of the largest.</p>
+  <figure>
+    <div class="chartbox" id="ch-ai"></div>
+    <figcaption>Left: automation level of FP&amp;A activities. Right: use of AI/ML-based tools in FP&amp;A. Both by company size in global FTE. The mid-size cohort’s 8% at the embedded tier — against 30% for smaller and 36% for larger companies — is the kind of non-monotonic step that small cohorts produce; the honest reading is “mid-size companies are not ahead”, not a precise ranking.<sup>†</sup>
+    <span class="src">Source: EY survey, pp. 11–12 — “Automation level of FP&amp;A activities” · “Use of AI/ML-based tools in FP&amp;A”</span></figcaption>
+  </figure>
+  <div class="sowhat"><span class="k mono">So what</span>
+    <p>Automation budgets buy parity; data readiness and embedded AI buy advantage — and the study’s point is that the second is gated by the first plus governance, not by tooling. Size still predicts who converts: the largest cohort has both the fewest abstainers (9%) and the most embedded adopters (36%).</p></div>
+  <p class="fnote"><sup>†</sup> Tier labels for the AI/ML chart follow the study’s prose — companies that “do not use AI in FP&amp;A yet”, those “still in the evaluation phase”, and the minority that “have embedded AI or machine learning into selected FP&amp;A activities” (p. 11). The published chart itself reuses the automation chart’s legend.</p>
+</section>
+
+<!-- ═══════════ Positioning tool ═══════════ -->
+<section>
+  <div class="exh-head"><span class="exh-no mono">Interactive</span>
+    <h2>Where does your function stand?</h2></div>
+  <p class="lede">Describe your FP&amp;A setup and the page positions it against the survey: the nearest maturity cohort, what that cohort’s next tier typically hands over next, and which blocker the rotation in Exhibit&nbsp;4 predicts you meet first. Nothing is scored — every sentence below is read directly off the published figures.</p>
+
+  <div class="tool">
+    <p class="tool-q mono">1 · How large is your FP&amp;A organization (FTE)?</p>
+    <div class="chips" id="t-size"></div>
+
+    <p class="tool-q mono">2 · Which FP&amp;A processes does your GBS support today?</p>
+    <div class="chips" id="t-procs"></div>
+    <div class="chips" style="margin-top:10px"><button class="chip" id="t-nogbs" aria-pressed="false">We don’t run FP&amp;A in GBS yet</button></div>
+
+    <p class="tool-q mono">3 · Optional — AI/ML use in FP&amp;A, and your company’s global size</p>
+    <div class="chips" id="t-ai"></div>
+    <div class="chips" id="t-gsize" style="margin-top:8px"></div>
+
+    <p class="exnote" id="t-exnote">Pre-filled as an example — a 500–1,000 FTE function running the transactional core plus budgeting. Replace with your own.</p>
+
+    <div class="result" id="t-result"></div>
+  </div>
+</section>
+
+<!-- ═══════════ Decisions ═══════════ -->
+<section>
+  <div class="exh-head"><span class="exh-no mono">The CFO agenda</span>
+    <h2>“Five decisions you can’t delegate nor delay”</h2></div>
+  <p class="lede">The study closes with five leadership choices for the next 24 months. Condensed faithfully:</p>
+  <ol class="decisions">
+    <li><div><h3>Revisit the FP&amp;A operating model</h3><p>Clear governance, decision rights and service boundaries between retained Finance and GBS — a unified operating backbone with standardized calendars and end-to-end accountability.</p><span class="xref mono">Evidence · silos top every cohort’s list, Exhibit 4</span></div></li>
+    <li><div><h3>Elevate data readiness to a strategic priority</h3><p>Harmonized data models, named data stewards, aligned KPI definitions — data governance treated as a core enabler, not a technical concern.</p><span class="xref mono">Evidence · data is the mature cohort’s residual blocker, Exhibits 4–5</span></div></li>
+    <li><div><h3>Accelerate automation and AI adoption</h3><p>Automate the recurring, rule-based work first; then layer AI onto forecasting, scenario modeling, early-warning indicators and automated insights.</p><span class="xref mono">Evidence · the widening AI gap by size, Exhibit 5</span></div></li>
+    <li><div><h3>Evolve FP&amp;A roles and skills</h3><p>Shift the profile toward interpretation, business partnering, driver-based planning and storytelling — in GBS teams as much as in retained Finance.</p><span class="xref mono">Evidence · the scope shift toward planning work, Exhibits 2–3</span></div></li>
+    <li><div><h3>Actively manage stakeholder trust</h3><p>Transparent service models and regular performance dialogues, so GBS is perceived as a strategic enabler rather than a reporting factory.</p><span class="xref mono">Evidence · buy-in peaks exactly when scope turns strategic, Exhibits 3–4</span></div></li>
+  </ol>
+</section>
+
+<!-- ═══════════ Method ═══════════ -->
+<section>
+  <div class="method">
+    <h3>What this survey can and cannot say</h3>
+    <ul>
+      <li><b>~50 companies, surveyed in H2 2025.</b> Percentages per maturity cohort rest on small groups; positions are meaningful, single points are not.</li>
+      <li><b>Maturity is self-assessed</b> — and the authors say so themselves, noting that a study about GBS usage “may lead to a certain bias” connecting GBS to maturity. The gradient across cohorts is the robust part.</li>
+      <li><b>“Supported by GBS” measures presence, not extent.</b> The study states that 100% means a process is generally supported, without specifying how much of it moved.</li>
+      <li><b>Direction is consistent everywhere.</b> Whatever the individual cell, all five exhibits point the same way: scale enables adoption, maturity widens scope, and automation precedes intelligence.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p><b>Source:</b> Christian Willenbruch, Maria Saggese, Alexandre Magnou — <a href="https://www.ey.com/content/dam/ey-unified-site/ey-com/en-gl/services/consulting/documents/ey-gl-the-state-of-financial-planning-in-global-business-services-in-2026-and-beyond-07-2026.pdf"><em>The state of Financial Planning and Analysis in Global Business Services in 2026 and beyond</em></a>, EY, May 2026. All survey figures belong to the study and its authors.</p>
+  <p>This page is an independent reading of the published figures, compiled by Moritz Richter. It is not an EY publication, and any interpretive framing — the staircase, the rotation of blockers, the small-cohort caveats — is the compiler’s, not the authors’.</p>
+</footer>
+
+</div>
+<div id="tip" role="presentation"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------- data (verified against label coordinates in the PDF) ---------------- */
+  const ADOPTION = [
+    ["<100", 33], ["100–500", 47], ["500–1,000", 63],
+    ["1,000–2,000", 80], ["2,000–3,000", 100], [">3,000", 100]
+  ];
+
+  const PROCS = [
+    ["Financial", "Analysis"], ["Cost", "Accounting"], ["Performance", "Reporting"],
+    ["Budgeting &", "Annual Planning"], ["Forecasting", ""], ["Capex", "Management"],
+    ["Strategic", "Planning"], ["Strategic Proj.", "/ M&A"]
+  ];
+  const SCOPE = {
+    names: ["Basic", "Developing", "Mature"],
+    basic:  [33, 67, 33, 33, 33, 33, 0, 0],
+    dev:    [78, 72, 78, 61, 61, 39, 17, 11],
+    mature: [100, 100, 100, 100, 75, 50, 75, 50]
+  };
+
+  /* current + planned, sorted by combined level */
+  const PLAN = [
+    ["Performance Reporting", 53, 35],
+    ["Financial Analysis", 50, 29],
+    ["Cost Accounting", 47, 24],
+    ["Budgeting & Annual Planning", 38, 24],
+    ["Forecasting", 35, 24],
+    ["Capex Management", 26, 15],
+    ["Strategic Planning", 18, 6],
+    ["Strategic Projects / M&A", 15, 3]
+  ];
+
+  const CHAL = [
+    ["Limited scope of activities", 100, 31, 25],
+    ["Organizational silos", 100, 69, 50],
+    ["Stakeholder buy-in", 0, 62, 50],
+    ["Lack of tools / automation", 50, 46, 50],
+    ["Poor data quality", 50, 38, 50],
+    ["Limited business proximity", 0, 15, 0],
+    ["Talent acquisition / upskilling", 0, 8, 0]
+  ];
+
+  const SIZES = ["5,000–20,000", "20,000–50,000", ">50,000"];
+  const AUTO = { none: [10, 8, 9], partial: [80, 85, 64], most: [10, 8, 27] };
+  const AI   = { none: [40, 31, 9], partial: [30, 62, 55], most: [30, 8, 36] };
+
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const S = () => ({ s1: css("--s1"), s2: css("--s2"), s3: css("--s3"), none: css("--none") });
+
+  /* ---------------- tooltip ---------------- */
+  const tip = document.getElementById("tip");
+  document.addEventListener("pointermove", e => {
+    const t = e.target.closest("[data-tip]");
+    if (!t) { tip.style.opacity = 0; return; }
+    tip.textContent = t.getAttribute("data-tip");
+    tip.style.opacity = 1;
+    const pad = 14, w = tip.offsetWidth, h = tip.offsetHeight;
+    let x = e.clientX + pad, y = e.clientY - h - pad;
+    if (x + w > innerWidth - 8) x = e.clientX - w - pad;
+    if (y < 8) y = e.clientY + pad;
+    tip.style.left = x + "px"; tip.style.top = y + "px";
+  });
+  document.addEventListener("pointerleave", () => { tip.style.opacity = 0; }, true);
+
+  const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+
+  /* y scale helper: percent 0-100 into [y0, y1] */
+  const yScale = (y0, y1) => v => y0 - (v / 100) * (y0 - y1);
+
+  function gridlines(x0, x1, y, ticks) {
+    let s = "";
+    for (const t of ticks) {
+      const yy = y(t);
+      s += `<line class="grid" x1="${x0}" x2="${x1}" y1="${yy}" y2="${yy}"/>`;
+      s += `<text class="axf" x="${x0 - 8}" y="${yy + 3.5}" text-anchor="end">${t}%</text>`;
+    }
+    return s;
+  }
+
+  /* ---------------- Exhibit 1: adoption staircase ---------------- */
+  (function () {
+    const W = 812, H = 300, L = 46, R = 8, T = 26, B = 44;
+    const y = yScale(H - B, T);
+    const n = ADOPTION.length, gap = 26;
+    const bw = (W - L - R - gap * (n - 1)) / n;
+    let s = gridlines(L, W - R, y, [0, 25, 50, 75, 100]);
+    ADOPTION.forEach(([lab, v], i) => {
+      const x = L + i * (bw + gap), yy = y(v), hh = (H - B) - yy;
+      s += `<g data-tip="${esc(lab)} FP&amp;A FTE\n${v}% deliver FP&amp;A through GBS">
+        <rect x="${x}" y="${yy}" width="${bw}" height="${Math.max(hh, 4)}" rx="4" fill="${S().s2}"/>
+        <rect x="${x}" y="${(H - B) - 2}" width="${bw}" height="2" fill="${S().s2}"/>
+        <text class="val" x="${x + bw / 2}" y="${yy - 8}" text-anchor="middle">${v}%</text>
+        <text class="ax" x="${x + bw / 2}" y="${H - B + 18}" text-anchor="middle">${esc(lab)}</text>
+      </g>`;
+    });
+    s += `<line class="base" x1="${L}" x2="${W - R}" y1="${H - B}" y2="${H - B}"/>`;
+    s += `<text class="ax" x="${L}" y="${H - 6}">FP&amp;A organization size (FTE) →</text>`;
+    document.getElementById("ch-adoption").innerHTML =
+      `<svg viewBox="0 0 ${W} ${H}" style="min-width:560px" role="img" aria-label="Bar chart: GBS adoption for FP&A rises from 33% below 100 FTE to 100% above 2,000 FTE">${s}</svg>`;
+  })();
+
+  /* ---------------- Exhibit 2: scope by maturity, grouped ---------------- */
+  const drawScope = function () {
+    const W = 812, H = 340, L = 46, R = 8, T = 26, B = 58;
+    const y = yScale(H - B, T);
+    const n = PROCS.length, groupGap = 18;
+    const gw = (W - L - R - groupGap * (n - 1)) / n;
+    const bw = (gw - 4) / 3; /* 2px spacer between bars */
+    const cols = [S().s1, S().s2, S().s3];
+    const series = [SCOPE.basic, SCOPE.dev, SCOPE.mature];
+    let s = gridlines(L, W - R, y, [0, 25, 50, 75, 100]);
+    let gs = ["", "", ""];
+    PROCS.forEach((lab, i) => {
+      const gx = L + i * (gw + groupGap);
+      series.forEach((ser, k) => {
+        const v = ser[i], x = gx + k * (bw + 2), yy = y(v), hh = (H - B) - yy;
+        const name = lab[0] + (lab[1] ? " " + lab[1] : "");
+        gs[k] += `<g data-tip="${esc(name)}\n${esc(SCOPE.names[k])}: ${v}% supported by GBS">
+          <rect x="${x}" y="${v === 0 ? (H - B) - 3 : yy}" width="${bw}" height="${v === 0 ? 3 : Math.max(hh, 4)}" rx="3" fill="${cols[k]}" ${v === 0 ? 'opacity="0.35"' : ''}/>
+        </g>`;
+      });
+      s += `<text class="ax" x="${gx + gw / 2}" y="${H - B + 18}" text-anchor="middle">${esc(lab[0])}</text>`;
+      if (lab[1]) s += `<text class="ax" x="${gx + gw / 2}" y="${H - B + 31}" text-anchor="middle">${esc(lab[1])}</text>`;
+    });
+    s += `<g class="series" id="sc-0">${gs[0]}</g><g class="series" id="sc-1">${gs[1]}</g><g class="series" id="sc-2">${gs[2]}</g>`;
+    s += `<line class="base" x1="${L}" x2="${W - R}" y1="${H - B}" y2="${H - B}"/>`;
+    document.getElementById("ch-scope").innerHTML =
+      `<svg viewBox="0 0 ${W} ${H}" style="min-width:680px" role="img" aria-label="Grouped bar chart: share of companies whose GBS supports each FP&A process, split by maturity level">${s}</svg>`;
+  };
+  drawScope();
+
+  const INSIGHTS = {
+    def: "Strategic Planning is the sharpest cut: 0% of basic companies hand it to GBS, 17% of developing ones — and 75% of mature ones.",
+    0: "Basic setups hold GBS to the workbench: every process sits at 33% or below except Cost Accounting — and the strategic tier is untouched at 0%.",
+    1: "Developing companies have pushed the core to ≈75% and planning to ≈60% — but Strategic Planning (17%) and M&A (11%) are still retained.",
+    2: "Mature companies support every transactional and planning process at 100% through GBS — and even Strategic Planning reaches 75%."
+  };
+  document.getElementById("lg-scope").addEventListener("click", e => {
+    const b = e.target.closest(".btn"); if (!b) return;
+    const k = b.dataset.series, on = b.getAttribute("aria-pressed") !== "true";
+    document.querySelectorAll("#lg-scope .btn").forEach(x => x.setAttribute("aria-pressed", "false"));
+    for (let i = 0; i < 3; i++) document.getElementById("sc-" + i).style.opacity = 1;
+    if (on) {
+      b.setAttribute("aria-pressed", "true");
+      for (let i = 0; i < 3; i++) if (String(i) !== k) document.getElementById("sc-" + i).style.opacity = 0.18;
+    }
+    document.getElementById("scope-insight").textContent = on ? INSIGHTS[k] : INSIGHTS.def;
+  });
+
+  /* ---------------- Exhibit 3: current + planned, horizontal stacked ---------------- */
+  (function () {
+    const W = 812, rowH = 40, T = 30, B = 26, L = 218, R = 52;
+    const H = T + PLAN.length * rowH + B;
+    const xw = v => (v / 100) * (W - L - R);
+    let s = "";
+    [0, 25, 50, 75, 100].forEach(t => {
+      const x = L + xw(t);
+      s += `<line class="grid" x1="${x}" x2="${x}" y1="${T - 8}" y2="${H - B}"/>
+            <text class="axf" x="${x}" y="${T - 14}" text-anchor="middle">${t}%</text>`;
+    });
+    s += `<defs><pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+            <rect width="6" height="6" fill="${S().s1}" opacity="0.28"/>
+            <line x1="0" y1="0" x2="0" y2="6" stroke="${S().s2}" stroke-width="2.2"/>
+          </pattern></defs>`;
+    PLAN.forEach(([name, cur, add], i) => {
+      const yy = T + i * rowH, bh = 20, yc = yy + (rowH - bh) / 2;
+      s += `<text class="ax" x="${L - 12}" y="${yc + bh / 2 + 3.5}" text-anchor="end">${esc(name)}</text>`;
+      s += `<g data-tip="${esc(name)}\nToday: ${cur}%${add ? "\nPlanned: +" + add + "pt → " + (cur + add) + "%" : "\nNo planned addition"}">`;
+      s += `<rect x="${L}" y="${yc}" width="${Math.max(xw(cur), 3)}" height="${bh}" rx="3" fill="${S().s3}"/>`;
+      if (add > 0) s += `<rect x="${L + xw(cur) + 2}" y="${yc}" width="${Math.max(xw(add) - 2, 2)}" height="${bh}" rx="3" fill="url(#hatch)" stroke="${S().s2}" stroke-width="1"/>`;
+      s += `<text class="val" x="${L + xw(cur + add) + 8}" y="${yc + bh / 2 + 3.5}">${cur + add}%</text></g>`;
+    });
+    s += `<line class="base" x1="${L}" x2="${L}" y1="${T - 8}" y2="${H - B}"/>`;
+    document.getElementById("ch-plan").innerHTML =
+      `<svg viewBox="0 0 ${W} ${H}" style="min-width:640px" role="img" aria-label="Horizontal stacked bars: current versus planned GBS penetration per FP&A process">${s}</svg>
+       <div class="legend">
+         <span class="lg"><span class="sw" style="background:${S().s3}"></span>Currently supported</span>
+         <span class="lg"><span class="sw" style="background:repeating-linear-gradient(45deg,${S().s2},${S().s2} 2px,transparent 2px,transparent 5px);border:1px solid ${S().s2}"></span>Planned to include (1–3 yrs)</span>
+       </div>`;
+  })();
+
+  /* ---------------- Exhibit 4: challenges dot plot ---------------- */
+  (function () {
+    const W = 812, rowH = 44, T = 30, B = 26, L = 218, R = 30;
+    const H = T + CHAL.length * rowH + B;
+    const xw = v => L + (v / 100) * (W - L - R);
+    const cols = [S().s1, S().s2, S().s3];
+    let s = "";
+    [0, 25, 50, 75, 100].forEach(t => {
+      s += `<line class="grid" x1="${xw(t)}" x2="${xw(t)}" y1="${T - 8}" y2="${H - B}"/>
+            <text class="axf" x="${xw(t)}" y="${T - 14}" text-anchor="middle">${t}%</text>`;
+    });
+    CHAL.forEach(([name, b, d, m], i) => {
+      const yc = T + i * rowH + rowH / 2;
+      const vals = [b, d, m];
+      const lo = Math.min(b, d, m), hi = Math.max(b, d, m);
+      s += `<text class="ax" x="${L - 12}" y="${yc + 3.5}" text-anchor="end">${esc(name)}</text>`;
+      s += `<line x1="${xw(lo)}" x2="${xw(hi)}" y1="${yc}" y2="${yc}" stroke="${S().none}" stroke-width="1.5"/>`;
+      /* draw extreme dots first so ties overlap cleanly; ring for separation */
+      const order = [0, 1, 2].sort((a, bb) => vals[bb] - vals[a]);
+      for (const k of order) {
+        s += `<circle data-tip="${esc(name)}\n${esc(SCOPE.names[k])}: named by ${vals[k]}%" cx="${xw(vals[k])}" cy="${yc}" r="7" fill="${cols[k]}" stroke="var(--paper)" stroke-width="2"/>`;
+      }
+    });
+    s += `<line class="base" x1="${L}" x2="${L}" y1="${T - 8}" y2="${H - B}"/>`;
+    document.getElementById("ch-chal").innerHTML =
+      `<svg viewBox="0 0 ${W} ${H}" style="min-width:640px" role="img" aria-label="Dot plot: share of companies naming each challenge, three dots per row for basic, developing and mature cohorts">${s}</svg>
+       <div class="legend">
+         <span class="lg"><span class="sw" style="background:${S().s1};border-radius:50%"></span>Basic</span>
+         <span class="lg"><span class="sw" style="background:${S().s2};border-radius:50%"></span>Developing</span>
+         <span class="lg"><span class="sw" style="background:${S().s3};border-radius:50%"></span>Mature</span>
+       </div>`;
+  })();
+
+  /* ---------------- Exhibit 5: automation & AI, two stacked panels ---------------- */
+  (function () {
+    const W = 812, H = 330, T = 26, B = 66, mid = 60;
+    const pw = (W - mid) / 2;
+    const y = yScale(H - B, T);
+    const tiers = [
+      { k: "none", label: ["No use"], color: S().none },
+      { k: "partial", label: ["Partial /", "evaluating"], color: S().s2 },
+      { k: "most", label: ["Embedded /", "most automated"], color: S().s3 }
+    ];
+    const panel = (x0, data, title, tierNames) => {
+      const L2 = x0 + 44, R2 = x0 + pw - 8;
+      const n = 3, gap = 30, bw = (R2 - L2 - gap * (n - 1)) / n;
+      let s = `<text class="valw" fill="var(--ink)" x="${L2}" y="${T - 10}" style="font-size:12px;letter-spacing:.06em">${title}</text>`;
+      [0, 50, 100].forEach(t => {
+        s += `<line class="grid" x1="${L2}" x2="${R2}" y1="${y(t)}" y2="${y(t)}"/>
+              <text class="axf" x="${L2 - 7}" y="${y(t) + 3.5}" text-anchor="end">${t}</text>`;
+      });
+      SIZES.forEach((sz, i) => {
+        const x = L2 + i * (bw + gap);
+        let acc = 0;
+        tiers.forEach((tier, k) => {
+          const v = data[tier.k][i];
+          if (v <= 0) return;
+          const y1 = y(acc + v), hh = y(acc) - y1 - (k < 2 ? 2 : 0);
+          s += `<rect data-tip="${esc(sz)} FTE — ${esc(title)}\n${esc(tierNames[k])}: ${v}%"
+                 x="${x}" y="${y1}" width="${bw}" height="${Math.max(hh, 3)}" rx="3" fill="${tier.color}"/>`;
+          if (v >= 8) s += `<text class="valw" x="${x + bw / 2}" y="${(y1 + y(acc)) / 2 + 4}" text-anchor="middle" fill="${k === 0 ? 'var(--ink)' : 'var(--paper)'}">${v}</text>`;
+          acc += v;
+        });
+        s += `<text class="ax" x="${x + bw / 2}" y="${H - B + 18}" text-anchor="middle">${esc(sz)}</text>`;
+      });
+      s += `<line class="base" x1="${L2}" x2="${R2}" y1="${H - B}" y2="${H - B}"/>`;
+      s += `<text class="ax" x="${L2}" y="${H - B + 36}">global FTE →</text>`;
+      return s;
+    };
+    let s = panel(0, AUTO, "AUTOMATION LEVEL", ["Not at all", "Some processes partially automated", "Most recurring tasks automated"]);
+    s += panel(pw + mid, AI, "USE OF AI / ML TOOLS", ["No AI/ML use yet", "Evaluating / partial", "Embedded in selected activities"]);
+    s += `<line x1="${pw + mid / 2}" x2="${pw + mid / 2}" y1="${T}" y2="${H - B}" stroke="var(--rule)" stroke-width="1"/>`;
+    document.getElementById("ch-ai").innerHTML =
+      `<svg viewBox="0 0 ${W} ${H}" style="min-width:680px" role="img" aria-label="Two stacked bar panels: automation level and AI/ML use in FP&A by company size">${s}</svg>
+       <div class="legend">
+         <span class="lg"><span class="sw" style="background:${S().none}"></span>Not at all</span>
+         <span class="lg"><span class="sw" style="background:${S().s2}"></span>Partial / evaluating</span>
+         <span class="lg"><span class="sw" style="background:${S().s3}"></span>Most automated / embedded</span>
+       </div>`;
+  })();
+
+  /* ---------------- Positioning tool ---------------- */
+  (function () {
+    const PROC_FULL = ["Financial Analysis", "Cost Accounting", "Performance Reporting",
+      "Budgeting & Annual Planning", "Forecasting", "Capex Management",
+      "Strategic Planning", "Strategic Projects / M&A"];
+    const COHORTS = [
+      { name: "Basic", p: SCOPE.basic },
+      { name: "Developing", p: SCOPE.dev },
+      { name: "Mature", p: SCOPE.mature }
+    ];
+    const BLOCKERS = [
+      { now: "<b>limited scope and organizational silos</b> — every basic company in the survey named both",
+        next: "stakeholder buy-in, which arrives the moment scope turns strategic" },
+      { now: "<b>organizational silos (69%) and stakeholder buy-in (62%)</b> — the trust barrier of the middle tier",
+        next: "data quality and tooling, the mature cohort’s residual blockers" },
+      { now: "<b>no single blocker</b> — silos, buy-in, tools and data quality all settle at 50%",
+        next: "extent rather than scope: moving more of each process, not more processes" }
+    ];
+    const AI_TIERS = ["No AI/ML use yet", "Evaluating / partial", "Embedded in selected activities"];
+    const AI_BY_SIZE = [AI.none, AI.partial, AI.most]; /* [tier][sizeIdx] */
+
+    const state = { size: 2, procs: [1, 1, 1, 1, 0, 0, 0, 0], nogbs: false, ai: -1, gsize: -1, touched: false };
+
+    const el = id => document.getElementById(id);
+    const mkChips = (host, labels, get, set, multi) => {
+      host.innerHTML = labels.map((l, i) =>
+        `<button class="chip" data-i="${i}" aria-pressed="${get(i) ? "true" : "false"}">${esc(l)}</button>`).join("");
+      host.addEventListener("click", e => {
+        const b = e.target.closest(".chip"); if (!b || b.disabled) return;
+        set(+b.dataset.i, b.getAttribute("aria-pressed") !== "true");
+        state.touched = true; sync();
+      });
+    };
+    const paint = (host, get) => host.querySelectorAll(".chip").forEach((b, i) => b.setAttribute("aria-pressed", get(i) ? "true" : "false"));
+
+    mkChips(el("t-size"), ADOPTION.map(a => a[0] + " FTE"), i => i === state.size, (i, on) => { state.size = on ? i : state.size; }, false);
+    mkChips(el("t-procs"), PROC_FULL, i => state.procs[i] === 1, (i, on) => { state.procs[i] = on ? 1 : 0; if (on) state.nogbs = false; }, true);
+    mkChips(el("t-ai"), AI_TIERS, i => i === state.ai, (i, on) => { state.ai = on ? i : -1; }, false);
+    mkChips(el("t-gsize"), SIZES.map(s => s + " global FTE"), i => i === state.gsize, (i, on) => { state.gsize = on ? i : -1; }, false);
+    el("t-nogbs").addEventListener("click", () => {
+      state.nogbs = !state.nogbs;
+      if (state.nogbs) state.procs = [0, 0, 0, 0, 0, 0, 0, 0];
+      state.touched = true; sync();
+    });
+
+    function nearestCohort() {
+      let best = 0, bestD = Infinity;
+      COHORTS.forEach((c, k) => {
+        const d = c.p.reduce((s, p, i) => s + Math.abs(state.procs[i] - p / 100), 0);
+        if (d < bestD - 1e-9) { bestD = d; best = k; }
+      });
+      return best;
+    }
+
+    function render() {
+      const R = el("t-result");
+      const adopt = ADOPTION[state.size][1];
+      const rows = [];
+      let head;
+
+      if (state.nogbs) {
+        head = adopt >= 100
+          ? "Every surveyed company your size already delivers FP&A through GBS — the survey has no cohort left for waiting."
+          : `You are with the ${100 - adopt}% of your size band that has not moved yet — and the survey says the move is coming.`;
+        rows.push(["Adoption", `<b>${adopt}%</b> of companies with ${esc(ADOPTION[state.size][0])} FP&A FTE already deliver FP&A through GBS — and <b>85%</b> of today’s non-adopters plan to add it within 1–3 years.`]);
+        rows.push(["Entry scope", `The survey’s basic cohort starts with the transactional core: <b>Cost Accounting (67%)</b>, then Financial Analysis, Performance Reporting and Budgeting (33% each). Strategic work enters the portfolio only later — 0% of basic setups run it.`]);
+        rows.push(["First blocker", `Expect ${BLOCKERS[0].now}; sequencing centralization with automation is exactly what the study observes slower movers doing deliberately.`]);
+      } else if (!state.procs.some(Boolean)) {
+        head = "Select the processes your GBS supports — or mark that FP&A is not in GBS yet — to position your function.";
+      } else {
+        const k = nearestCohort();
+        const c = COHORTS[k];
+        const n = state.procs.reduce((a, b) => a + b, 0);
+        head = `Your scope profile sits closest to the survey’s ${c.name.toLowerCase()} cohort — and the data says what typically comes next.`;
+        rows.push(["Adoption", `<b>${adopt}%</b> of companies with ${esc(ADOPTION[state.size][0])} FP&A FTE deliver FP&A through GBS — ${adopt >= 80 ? "your size band has largely settled the question" : "your size band is still mid-staircase"}.`]);
+        rows.push(["Scope", `You run <b>${n} of 8</b> surveyed processes in GBS. Matched against the three cohort profiles in Exhibit 2, that pattern reads <b>${c.name}</b>.`]);
+        if (k < 2) {
+          const nxt = COHORTS[k + 1];
+          const gaps = PROC_FULL.map((name, i) => ({ name, cur: c.p[i], nxt: nxt.p[i], have: state.procs[i] }))
+            .filter(g => !g.have && g.nxt > g.cur)
+            .sort((a, b) => (b.nxt - b.cur) - (a.nxt - a.cur)).slice(0, 3);
+          if (gaps.length) rows.push(["Next scope", `What the ${nxt.name.toLowerCase()} cohort adds where you have not: ` +
+            gaps.map(g => `<b>${esc(g.name)}</b> (${g.nxt}% of that cohort run it, vs ${g.cur}% of yours)`).join(" · ") + "."]);
+        } else {
+          rows.push(["Next scope", `At mature scope the survey’s question changes from breadth to <b>extent</b> — its own caveat is that “supported” does not say how much of a process moved.`]);
+        }
+        rows.push(["Blockers", `Your cohort’s named blockers: ${BLOCKERS[k].now}. Per the rotation in Exhibit 4, the next one is <b>${BLOCKERS[k].next}</b>.`]);
+        if (state.ai >= 0 && state.gsize >= 0) {
+          const share = AI_BY_SIZE[state.ai][state.gsize];
+          const ahead = AI_BY_SIZE.slice(state.ai + 1).reduce((s, t) => s + t[state.gsize], 0);
+          rows.push(["AI position", `Among ${esc(SIZES[state.gsize])}-FTE companies, <b>${share}%</b> share your tier (“${esc(AI_TIERS[state.ai])}”) and <b>${ahead}%</b> are further along${state.ai === 2 ? " — no one is: you are at the front of your cohort" : ""}.`]);
+        }
+      }
+
+      R.innerHTML = `<p class="rh">${head}</p>` +
+        rows.map(([kk, v]) => `<div class="row"><span class="rk mono">${kk}</span><span class="rv">${v}</span></div>`).join("") +
+        `<p class="caveat">Positions, not scores: the survey’s ~50 companies split into three self-assessed cohorts, so read direction and gaps, never decimal points.</p>`;
+    }
+
+    function sync() {
+      paint(el("t-size"), i => i === state.size);
+      paint(el("t-procs"), i => state.procs[i] === 1);
+      paint(el("t-ai"), i => i === state.ai);
+      paint(el("t-gsize"), i => i === state.gsize);
+      el("t-nogbs").setAttribute("aria-pressed", state.nogbs ? "true" : "false");
+      el("t-procs").querySelectorAll(".chip").forEach(b => { b.disabled = state.nogbs; });
+      if (state.touched) el("t-exnote").hidden = true;
+      render();
+    }
+    sync();
+  })();
+
+})();
+</script>
+
+</body>
+</html>
