@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="An independent interactive reading of EY's 2026 survey of FP&A in Global Business Services — five exhibits and a positioning tool, every figure redrawn from the published study.">
+<meta name="description" content="An independent interactive reading of EY's 2026 survey of FP&A in Global Business Services — six exhibits, a positioning tool, and a hiring-market test of the survey's gradient.">
 <title>Scale Wins, Fragmentation Loses</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
@@ -174,7 +174,7 @@
     font-family: "Newsreader", Georgia, serif; font-size: 22px; line-height: 1.35;
     margin: 10px 0 0; text-wrap: balance; font-weight: 500;
   }
-  .arg-items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--rule-soft); }
+  .arg-items { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 26px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--rule-soft); }
   .arg-item .n { font-family: "IBM Plex Mono", Menlo, monospace; font-size: 12px; color: var(--accent-ink); font-weight: 600; }
   .arg-item p { margin: 6px 0 0; font-size: 14px; color: var(--muted); line-height: 1.55; text-wrap: pretty; }
   .arg-item p b { color: var(--ink); font-weight: 600; }
@@ -303,6 +303,9 @@
       <div class="arg-item"><span class="n">3</span>
         <p><b>The binding constraint rotates as functions mature</b> — from scope and silos, to stakeholder trust, to data — and AI separates the field where automation alone no longer does.</p>
         <span class="xref mono">Exhibits 4–5</span></div>
+      <div class="arg-item"><span class="n">4</span>
+        <p><b>The gradient survives an independent test.</b> In 2,926 live FP&amp;A job postings, zero of the 137 with GBS-delivery evidence are strategic-tier — and planning work is overrepresented in GBS hiring, led by providers.</p>
+        <span class="xref mono">Exhibit 6</span></div>
     </div>
   </div>
 </header>
@@ -396,6 +399,21 @@
   <div class="sowhat"><span class="k mono">So what</span>
     <p>Automation budgets buy parity; data readiness and embedded AI buy advantage — and the study’s point is that the second is gated by the first plus governance, not by tooling. Size still predicts who converts: the largest cohort has both the fewest abstainers (9%) and the most embedded adopters (36%).</p></div>
   <p class="fnote"><sup>†</sup> Tier labels for the AI/ML chart follow the study’s prose — companies that “do not use AI in FP&amp;A yet”, those “still in the evaluation phase”, and the minority that “have embedded AI or machine learning into selected FP&amp;A activities” (p. 11). The published chart itself reuses the automation chart’s legend.</p>
+</section>
+
+<!-- ═══════════ Exhibit 6 ═══════════ -->
+<section>
+  <div class="exh-head"><span class="exh-no mono">Exhibit 6</span>
+    <h2>The hiring market corroborates the gradient — no strategic FP&amp;A work is being hired into GBS</h2></div>
+  <p class="measure mono">Share of FP&amp;A postings by process tier, % · 2,926 live postings · eight markets · September 2026</p>
+  <p class="lede">The survey reports what ~50 companies say about themselves. This exhibit tests the claim against evidence the survey cannot see: 2,926 live FP&amp;A job postings, classified by process tier, split by whether a posting carries visible GBS-delivery evidence — a named shared-services / GBS / GCC context, or a third-party GBS provider as employer. If planning is genuinely the expansion wave and strategy genuinely stays retained, both should be visible in what GBS organizations hire for. Both are: <b>0 of 137 GBS-evidenced postings are strategic-tier</b>, and planning work is <b>over</b>represented in GBS-evidenced hiring — 55% against 42% outside.</p>
+  <figure>
+    <div class="chartbox" id="ch-hiring"></div>
+    <figcaption>The two GBS lenses disagree informatively: postings naming a captive SSC/GCC context run 59% core, while third-party providers run 66% planning — if that split holds, the planning wave is being sold by providers before it is built in-house. Tier classification measures 78.6% accuracy against a cold-labelled gold set; the planning class measures 58% precision, so the planning tilt is a direction, not a decimal. The strategic zero is robust — that class over-triggers if anything.
+    <span class="src">Source: <a href="https://github.com/morichtereur/fpa-gbs-hiring-monitor">fpa-gbs-hiring-monitor</a> — independent study by the compiler; Adzuna postings, point-in-time snapshot, method and measured error in the repository</span></figcaption>
+  </figure>
+  <div class="sowhat"><span class="k mono">So what</span>
+    <p>The survey's gradient survives an independent test on data its respondents never touched. For a GBS leader the sharpest implication is the provider split: if planning-tier FP&amp;A capacity is being hired by BPO providers faster than by captives, the build-vs-buy question for the planning wave is already being answered in the market — by the sell side.</p></div>
 </section>
 
 <!-- ═══════════ Positioning tool ═══════════ -->
@@ -718,6 +736,50 @@
          <span class="lg"><span class="sw" style="background:${S().none}"></span>Not at all</span>
          <span class="lg"><span class="sw" style="background:${S().s2}"></span>Partial / evaluating</span>
          <span class="lg"><span class="sw" style="background:${S().s3}"></span>Most automated / embedded</span>
+       </div>`;
+  })();
+
+  /* ---------------- Exhibit 6: hiring-market corroboration ---------------- */
+  (function () {
+    /* From github.com/morichtereur/fpa-gbs-hiring-monitor, snapshot 2026-09-04 */
+    const LENSES = [
+      ["GBS phrase signal", 59.0, 41.0, 0.0, 61],
+      ["BPO employer", 33.8, 66.2, 0.0, 77],
+      ["GBS combined", 45.3, 54.7, 0.0, 137],
+      ["No GBS evidence", 51.6, 41.7, 6.6, 2789]
+    ];
+    const W = 812, rowH = 46, T = 30, B = 10, L = 158, R = 150;
+    const H = T + LENSES.length * rowH + B;
+    const xw = v => (v / 100) * (W - L - R);
+    let s = "";
+    [0, 25, 50, 75, 100].forEach(t => {
+      const x = L + xw(t);
+      s += `<line class="grid" x1="${x}" x2="${x}" y1="${T - 8}" y2="${H - B}"/>
+            <text class="axf" x="${x}" y="${T - 14}" text-anchor="middle">${t}%</text>`;
+    });
+    const cols = [S().s1, S().s2, S().s3];
+    const tierNames = ["core", "planning", "strategic"];
+    LENSES.forEach(([name, core, plan, strat, n], i) => {
+      const yy = T + i * rowH, bh = 22, yc = yy + (rowH - bh) / 2;
+      s += `<text class="ax" x="${L - 12}" y="${yc + bh / 2 + 3.5}" text-anchor="end">${esc(name)}</text>`;
+      let left = 0;
+      [core, plan, strat].forEach((v, k) => {
+        if (v <= 0) return;
+        s += `<rect data-tip="${esc(name)} (n=${n})\n${tierNames[k]}: ${v}%"
+               x="${L + xw(left) + (left ? 2 : 0)}" y="${yc}" width="${Math.max(xw(v) - (left ? 2 : 0), 2)}" height="${bh}" rx="3" fill="${cols[k]}"/>`;
+        if (v >= 8) s += `<text class="valw" x="${L + xw(left + v / 2)}" y="${yc + bh / 2 + 3.5}" text-anchor="middle" fill="var(--paper)">${Math.round(v)}%</text>`;
+        left += v;
+      });
+      const note = `n=${n.toLocaleString("en-US")}` + (strat === 0 ? " · strategic: 0" : "");
+      s += `<text class="valw" x="${L + xw(100) + 10}" y="${yc + bh / 2 + 3.5}" fill="${strat === 0 ? 'var(--accent-ink)' : 'var(--faint)'}" style="font-size:10px">${note}</text>`;
+    });
+    s += `<line class="base" x1="${L}" x2="${L}" y1="${T - 8}" y2="${H - B}"/>`;
+    document.getElementById("ch-hiring").innerHTML =
+      `<svg viewBox="0 0 ${W} ${H}" style="min-width:640px" role="img" aria-label="Horizontal stacked bars: FP&A posting tier mix for GBS-evidenced versus other postings; the strategic tier is zero in every GBS lens">${s}</svg>
+       <div class="legend">
+         <span class="lg"><span class="sw" style="background:${S().s1}"></span>Core (analysis · cost · reporting)</span>
+         <span class="lg"><span class="sw" style="background:${S().s2}"></span>Planning (budget · forecast · capex)</span>
+         <span class="lg"><span class="sw" style="background:${S().s3}"></span>Strategic (strategy · M&amp;A)</span>
        </div>`;
   })();
 
